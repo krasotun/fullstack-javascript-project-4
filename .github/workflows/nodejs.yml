@@ -1,0 +1,13 @@
+name: krasotun
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: make install
+      - name: Lint application
+        run: make lint
+      - name: Test application
+        run: make test
