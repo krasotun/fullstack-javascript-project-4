@@ -13,6 +13,7 @@
   "author": "krasotun",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.4.0",
     "commander": "^11.0.0"
   },
   "devDependencies": {
