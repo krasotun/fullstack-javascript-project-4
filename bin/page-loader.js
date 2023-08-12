@@ -14,7 +14,7 @@ program
   )
   .action((url) => {
     const { output } = program.opts();
-    pageLoader(output, url).then((res) => res);
+    pageLoader(output, url).then((res) => console.log(res));
   });
 
 program.parse();
