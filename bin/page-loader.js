@@ -1,2 +1,20 @@
 #!/usr/bin/env node
-console.log('Page loader here!');
+import { Command } from 'commander';
+import pageLoader from '../src/index.js';
+
+const program = new Command();
+program
+  .name('page-loader')
+  .description('Saves all data from URL to folder')
+  .argument('<url>', 'url address to download page')
+  .option(
+    '-o, --output <type>',
+    'folder to save page, current folder default',
+    process.cwd(),
+  )
+  .action((url) => {
+    const { output } = program.opts();
+    return pageLoader(output, url);
+  });
+
+program.parse();
