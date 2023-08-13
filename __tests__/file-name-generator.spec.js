@@ -18,8 +18,8 @@ let result;
 
 describe('#fileNameGenerator', () => {
   beforeEach(async () => {
-    incomingUrl = await readFile('incoming-url.txt');
-    result = await readFile('expected-file-name.txt');
+    incomingUrl = await readFile('url.txt');
+    result = await readFile('file-name.txt');
   });
 
   it('should return file name from url', () => {

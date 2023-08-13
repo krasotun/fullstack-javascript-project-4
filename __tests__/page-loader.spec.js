@@ -22,9 +22,9 @@ describe('#pageLoader', () => {
   let tempDirPath;
 
   beforeEach(async () => {
-    incomingUrl = await readFile('incoming-url.txt');
-    expectedData = await readFile('expected-data.txt');
-    expectedFileName = await readFile('expected-file-name.txt');
+    incomingUrl = await readFile('url.txt');
+    expectedData = await readFile('data.txt');
+    expectedFileName = await readFile('file-name.txt');
     nock(incomingUrl).get('').reply(200, expectedData);
     tempDirPath = await fs.mkdtemp(path.join(os.tmpdir(), 'page-loader-'));
   });
