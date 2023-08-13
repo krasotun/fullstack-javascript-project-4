@@ -1,7 +1,8 @@
 const regEx = /[^0-9a-zA-Z]/g;
 
-export default (url) => {
-  let newString = '';
+export default (url, extension = 'html') => {
+  let newString = url;
+
   if (url.startsWith('https://')) {
     newString = url.replace('https://', '');
   }
@@ -10,5 +11,5 @@ export default (url) => {
     newString = url.replace('http://', '');
   }
 
-  return `${newString.trim().replace(regEx, '-')}.html`;
+  return `${newString.trim().replace(regEx, '-')}.${extension}`;
 };
