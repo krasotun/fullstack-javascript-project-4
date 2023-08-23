@@ -49,11 +49,29 @@ const dataMapper = (output, url) => {
     const imagesUrls = [
       ...$('img').map((_, element) => $(element).attr('src')),
     ];
-    // eslint-disable-next-line no-unused-vars
-    const [firstImage, _] = imagesUrls;
-    createFolder(output, url).then((folderPath) =>
-      saveFile(folderPath, url, firstImage),
-    );
+
+    if (imagesUrls.length) {
+      createFolder(output, url)
+        .then((folderPath) =>
+          Promise.all(
+            imagesUrls.map((imagesUrl) => saveFile(folderPath, url, imagesUrl)),
+          ),
+        )
+        .then(() => {
+          $('img').each((_, element) => {
+            $(element).attr(
+              'src',
+              `${generateFolderName(url)}/${generateFileName(
+                url,
+                $(element).attr('src'),
+              )}`,
+            );
+          });
+          const updatedHtml = $.html();
+          return Promise.resolve(updatedHtml);
+        })
+        .then((resultHtml) => console.log(resultHtml));
+    }
   });
 };
 
