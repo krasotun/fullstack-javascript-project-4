@@ -8,6 +8,21 @@ import cheerio from 'cheerio';
 
 const regEx = /[^0-9a-zA-Z]/g;
 
+const generateHTMLFileName = (url, extension = 'html') => {
+  let newString = url;
+
+  console.log(url);
+
+  if (url.startsWith('https://')) {
+    newString = url.replace('https://', '');
+  }
+
+  if (url.startsWith('http://')) {
+    newString = url.replace('http://', '');
+  }
+  return `${newString.trim().replace(regEx, '-')}.${extension}`;
+};
+
 const generateFileName = (url, filePath) => {
   const urlToParse = new URL(url);
   return `${urlToParse.hostname.replace(regEx, '-')}-assets${filePath.replace(
@@ -39,7 +54,7 @@ const saveFile = (folderPath, url, filePath) => {
     );
 };
 
-const dataMapper = (output, url) => {
+export default (output, url) => {
   let html;
 
   axios.get(url).then(({ data }) => {
@@ -70,9 +85,11 @@ const dataMapper = (output, url) => {
           const updatedHtml = $.html();
           return Promise.resolve(updatedHtml);
         })
-        .then((resultHtml) => console.log(resultHtml));
+        .then((resultHtml) => {
+          fs.writeFile(`${output}/${generateHTMLFileName(url)}`, resultHtml);
+        });
     }
   });
 };
 
-dataMapper(process.cwd(), ' http://127.0.0.1:5500/site');
+// dataMapper(process.cwd(), 'http://127.0.0.1:5500/site');
