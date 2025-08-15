@@ -1,1 +1,3 @@
-export default (output, url) => console.log({ output, url });
+import fetchPage from './page.js';
+
+export default (output, url) => fetchPage(url);
