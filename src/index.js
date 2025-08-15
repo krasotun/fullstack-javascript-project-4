@@ -1,3 +1,3 @@
-import fetchPage from './page.js';
+import fetchPage from './fetch-page.js';
 
 export default (output, url) => fetchPage(url);
