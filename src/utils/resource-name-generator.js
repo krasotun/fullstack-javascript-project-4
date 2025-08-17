@@ -1,4 +1,4 @@
-const resourceNameGenerator = (url, isFolder = false) => {
+export default (url, isFolder = false) => {
   const { hostname, pathname } = new URL(url);
 
   const fileName = `${(hostname + pathname).replace(/[^a-zA-Z0-9]+/g, '-')}${
@@ -7,5 +7,3 @@ const resourceNameGenerator = (url, isFolder = false) => {
 
   return fileName;
 };
-
-export default resourceNameGenerator;
