@@ -3,6 +3,7 @@ import resourceNameGenerator from './utils/resource-name-generator.js';
 import parseImages from './parse-images.js';
 import saveFile from './save-file.js';
 import createFolder from './create-folder.js';
+import fetchFile from './fetch-file.js';
 
 export default (output, url) =>
   // eslint-disable-next-line implicit-arrow-linebreak
@@ -14,15 +15,19 @@ export default (output, url) =>
       };
       return state;
     })
-    .then((imagesPaths) => {
+    .then((state) => {
       const imagesFolderPath = `${output}/${resourceNameGenerator(url, true)}`;
       return createFolder(imagesFolderPath).then(() => ({
-        imagesPaths,
+        ...state,
         imagesFolderPath,
       }));
     })
-    .then(() => {
+    .then((state) => {
+      const { imagesPaths } = state;
+      return Promise.all(imagesPaths.map(fetchFile)).then(console.log).then(() => state);
+    })
+    .then(({ fileData }) => {
       const fileName = resourceNameGenerator(url);
       const fullPath = `${output}/${fileName}`;
-      saveFile(fullPath, fileData);
+      return saveFile(fullPath, fileData);
     });

@@ -6,6 +6,7 @@ export default (html, baseUrl) => {
     .map((_, element) => {
       const src = $(element).attr('src');
       const path = new URL(src, baseUrl).toString();
+      console.log({ baseUrl, path });
       return path;
     })
     .get();
