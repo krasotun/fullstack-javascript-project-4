@@ -24,7 +24,11 @@ export default (output, url) =>
     })
     .then((state) => {
       const { imagesPaths } = state;
-      return Promise.all(imagesPaths.map(fetchFile)).then(console.log).then(() => state);
+      return Promise.all(imagesPaths.map((imagePath) => fetchFile(imagePath).then((data) => {
+        const { imagesFolderPath } = state;
+        console.log(data, imagesFolderPath, imagePath);
+      })))
+        .then(() => state);
     })
     .then(({ fileData }) => {
       const fileName = resourceNameGenerator(url);

@@ -5,8 +5,7 @@ export default (html, baseUrl) => {
   const imagePaths = $('img')
     .map((_, element) => {
       const src = $(element).attr('src');
-      const path = new URL(src, baseUrl).toString();
-      console.log({ baseUrl, path });
+      const path = `${baseUrl}/${src}`;
       return path;
     })
     .get();
